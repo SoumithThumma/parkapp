@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset=utf-8>
+	<title>Get a list of makes</title>
+</head>
+<body>
+	<div id="results-body"></div>
+	<script>
+		window.sdkAsyncInit = function() {
+			// Instantiate the SDK
+			var res = new EDMUNDSAPI('r4nd99j8b5qf58dzv8cj7zxs');
+			// Optional parameters
+			var options = {};
+			// Callback function to be called when the API response is returned
+			function success(res) {
+				var dropdown = document.getElementById('Make');
+				for(var i = 0;i < res.makesCount;i++)
+				{
+					if(i == 0)
+					{
+						var option = document.createElement('option');
+						option.text = "";
+						dropdown.add(option);
+						option = document.createElement('option');
+						option.text = res.makes[i].name;
+						dropdown.add(option);
+					}
+					else
+					{
+						var option = document.createElement('option');
+						option.text = res.makes[i].name;
+						dropdown.add(option);
+					}
+				}
+			}
+			function Model(res) {
+				var dropdown = document.getElementById('Model');
+				for(var i = 0;i < res.makesCount;i++)
+				{
+					if(i == 0)
+					{
+						var option = document.createElement('option');
+						option.text = "";
+						dropdown.add(option);
+						option = document.createElement('option');
+						option.text = res.models[i].name;
+						dropdown.add(option);
+					}
+					else
+					{
+						var option = document.createElement('option');
+						option.text = res.models[i].name;
+						dropdown.add(option);
+					}
+				}
+			}
+			function Year(res) {
+				var dropdown = document.getElementById('Year');
+				for(var i = 0;i < res.makesCount;i++)
+				{
+					if(i == 0)
+					{
+						var option = document.createElement('option');
+						option.text = "";
+						dropdown.add(option);
+						option = document.createElement('option');
+						option.text = res.makes[i].name;
+						dropdown.add(option);
+					}
+					else
+					{
+						var option = document.createElement('option');
+						option.text = res.makes[i].name;
+						dropdown.add(option);
+					}
+				}
+			}
+			// Oops, Houston we have a problem!
+			function fail(data) {
+				console.log(data);
+			}
+			// Fire the API call
+			res.api('/api/vehicle/v2/makes/', options, success, fail);
+			// Additional initialization code such as 
+			// adding Event Listeners goes here
+			var MakeSelect = document.getElementById("Model");
+			var Maketxt = MakeSelect.options[MakeSelect.selectedIndex].innerHTML;
+			<!--document.getElementById('Make').addEventListener("onchange", res.api('/api/vehicle/v2/' + Maketxt + '/models/', options, Model, fail));>
+			document.getElementById('Make').addEventListener("change", function(){var x  = document.getElementById("Make").value; document.getElementById("Model").value = x;})
+			document.getElementById('Model').addEventListener("onchange", Year);
+		};
+	// Load the SDK asynchronously
+	(function(d, s, id){
+		var lbl = document.getElementById("lbl1");
+		var js, sdkjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) {lbl.text = "failed"; return;}
+		js = d.createElement(s); js.id = id;
+		js.src = "C:/Users/jake/Documents/sdk-javascript-master/sdk-javascript-master/edmunds.api.sdk.js";
+		sdkjs.parentNode.insertBefore(js, sdkjs);
+	}(document, 'script', 'edmunds-jssdk'));
+	</script>
+	
+	<select id=Make> </select>
+	<select id=Model> </select>
+	<select id=Year> </select>
+	<label id=lbl1> </label>
+	
+</body>
+</html>
