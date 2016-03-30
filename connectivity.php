@@ -9,26 +9,28 @@ $db=mysql_select_db(DB_NAME,$con) or die("Failed to connect to MySQL: " . mysql_
 
 function SignIn()
 {
+
 session_start();   //starting the session for user profile page
-if(!empty($_POST['forms']))   //checking the 'user' name which is from Sign-In.html, is it empty or have some text
+if(!empty($_POST['forms'])) 
 {
-	$query = mysql_query("SELECT *  FROM User where Username = '$_POST[forms]' AND Password = '$_POST[Password1]'") or die(mysql_error());
-	$row = mysql_fetch_array($query) or die(mysql_error());
+	$query = mysql_query("SELECT *  FROM User where Username = '$_POST[forms]' AND Password = '$_POST[Password1]'");
+	$row = mysql_fetch_array($query);
+
 	if(!empty($row['Username']) AND !empty($row['Password']))
 	{
+
 		$_SESSION['Username'] = $row['Password'];
-		echo "SUCCESSFULLY LOGIN TO USER PROFILE PAGE...";
+		echo "Login Complete";
 
 	}
 	else
 	{
-		echo "SORRY... YOU ENTERD WRONG ID AND PASSWORD... PLEASE RETRY...";
+		echo "Wrong id or password";
 	}
 }
 }
-if(isset($_POST['submit']))
-{
+
 	SignIn();
-}
+
 
 ?>
