@@ -6,11 +6,14 @@
 	<title>Get a list of makes</title>
 </head>
 <body>
-	<div id="results-body"></div>
+	
+	<form method = "post" action = "http://www.deitel.com" autocomplete = "on">  
+	
 	<script>
 		window.sdkAsyncInit = function() {
 			// Instantiate the SDK
 			var res = new EDMUNDSAPI('r4nd99j8b5qf58dzv8cj7zxs');
+
 			// Optional parameters
 			var options = {};
 			// Callback function to be called when the API response is returned
@@ -36,8 +39,9 @@
 				}
 			}
 			function Model(res) {
+
 				var dropdown = document.getElementById('Model');
-				for(var i = 0;i < res.makesCount;i++)
+				for(var i = 0;i < res.modelsCount;i++)
 				{
 					if(i == 0)
 					{
@@ -58,7 +62,7 @@
 			}
 			function Year(res) {
 				var dropdown = document.getElementById('Year');
-				for(var i = 0;i < res.makesCount;i++)
+				for(var i = 0;i < res.yearsCount;i++)
 				{
 					if(i == 0)
 					{
@@ -66,46 +70,173 @@
 						option.text = "";
 						dropdown.add(option);
 						option = document.createElement('option');
-						option.text = res.makes[i].name;
+						option.text = res.years[i].year;
 						dropdown.add(option);
 					}
 					else
 					{
 						var option = document.createElement('option');
-						option.text = res.makes[i].name;
+						option.text = res.years[i].year;
 						dropdown.add(option);
 					}
 				}
 			}
+			
+
+			
+			function APIModel()
+			{
+				var select = document.getElementById("Model");
+				if(select.text != ""){select.text = "";}
+				var length = select.options.length;
+				for (i = 0; i < length; i++) 
+				{
+				  select.remove(0);
+				}
+				select = document.getElementById("Year");
+				if(select.text != ""){select.text = "";}	<!-- Need to delete text inside of dropdown box, and delete the values inside it to reset it for the new make's models >
+				length = select.options.length;
+				for (i = 0; i < length; i++) 
+				{
+				  select.remove(0);
+				}
+				select = document.getElementById("Color");
+				if(select.text != ""){select.selectedIndex = null;}
+				
+				var MakeSelect = document.getElementById("Make");
+				var Maketxt = MakeSelect.options[MakeSelect.selectedIndex].text;
+				res.api('/api/vehicle/v2/' + Maketxt + '/models/', options, Model, fail);
+			}
+			function APIYear()
+			{
+				var select = document.getElementById("Year");
+				if(select.text != ""){select.text = "";}	<!-- Need to delete text inside of dropdown box, and delete the values inside it to reset it for the new make's models >
+				var length = select.options.length;
+				for (i = 0; i < length; i++) 
+				{
+				  select.remove(0);
+				}
+				select = document.getElementById("Color");
+				if(select.text != ""){select.selectedIndex = null;}	<!-- Need to delete text inside of dropdown box, and delete the values inside it to reset it for the new make's models >
+
+				var MakeSelect = document.getElementById("Make");
+				var Maketxt = MakeSelect.options[MakeSelect.selectedIndex].text;	
+				var ModelSelect = document.getElementById("Model");
+				var Modeltxt = ModelSelect.options[ModelSelect.selectedIndex].text;
+				res.api('/api/vehicle/v2/' + Maketxt + '/' + Modeltxt + '/years/', options, Year, fail);
+			}
+			
+			function ConfirmPass()
+			{
+				console.log("Inside function");
+				var passlbl = document.getElementById('passlbl');
+				var Pass = document.getElementById('Pass');
+				var Cpass = document.getElementById('Cpass');
+				
+				if(Pass.value == Cpass.value)
+				{
+					console.log("Correct");
+				}
+				else
+				{
+					console.log("Incorrect");
+				}
+			}
+
 			// Oops, Houston we have a problem!
 			function fail(data) {
 				console.log(data);
 			}
 			// Fire the API call
 			res.api('/api/vehicle/v2/makes/', options, success, fail);
+			
+
 			// Additional initialization code such as 
 			// adding Event Listeners goes here
-			var MakeSelect = document.getElementById("Model");
-			var Maketxt = MakeSelect.options[MakeSelect.selectedIndex].innerHTML;
-			<!--document.getElementById('Make').addEventListener("onchange", res.api('/api/vehicle/v2/' + Maketxt + '/models/', options, Model, fail));>
-			document.getElementById('Make').addEventListener("change", function(){var x  = document.getElementById("Make").value; document.getElementById("Model").value = x;})
-			document.getElementById('Model').addEventListener("onchange", Year);
+			
+			document.getElementById('Make').addEventListener("change", APIModel);
+			document.getElementById('Model').addEventListener("change", APIYear);
+
+			document.getElementById('Pass').addEventListener("change", ConfirmPass);
+			document.getElementById('Cpass').addEventListener("change", ConfirmPass);
+			
 		};
 	// Load the SDK asynchronously
 	(function(d, s, id){
-		var lbl = document.getElementById("lbl1");
 		var js, sdkjs = d.getElementsByTagName(s)[0];
-		if (d.getElementById(id)) {lbl.text = "failed"; return;}
+		if (d.getElementById(id)) {return;}
 		js = d.createElement(s); js.id = id;
 		js.src = "sdk-javascript-master/edmunds.api.sdk.js";
 		sdkjs.parentNode.insertBefore(js, sdkjs);
 	}(document, 'script', 'edmunds-jssdk'));
 	</script>
 	
-	<select id=Make> </select>
-	<select id=Model> </select>
-	<select id=Year> </select>
-	<label id=lbl1> </label>
 	
+	<h2> Troy Parking Registration Page </h2></br>
+	
+	<p>
+		<label><strong>First Name: </strong><input type ="text" size = "25" maxlength = "30" required placeholder="First Name" id=Fname></label>
+	</P>
+	
+	<p>
+		<label><strong>Last Name: </strong><input type ="text" size = "25" maxlength = "30" required placeholder="Last Name" id=Lname></label>
+	</P>
+	
+	<p>
+		<label><strong>Password: </strong><input type ="password" size = "25" maxlength = "30" required placeholder="Password" id=Pass></label>
+	</P>
+
+	<p>
+		<label><strong>Confirm Password: </strong><input type ="password" size = "25" maxlength = "30" required placeholder="Confirm Password" id=Cpass></label>
+		<label id="passlbl"></label>
+	</P>		
+	
+	<p>
+		<label><strong>Email: </strong><input type ="email" size = "25" maxlength = "30" placeholder="name@troy.edu" required id=Email></label>
+	</p>
+
+	<p>
+		<strong>Please pick what type of commuter you are: </strong><br><br>
+		
+		<label>Residential-Student<input name = "radioBtn" type = "radio" value = "Residential-Student" checked></label>
+		<label>Commuter-Student<input name = "radioBtn" type = "radio" value = "Commuter-Student"></label>
+		<label>Faculty<input name = "radioBtn" type = "radio" value = "Faculty"></label>
+	</p>
+
+	<div>
+		<label>If you would like to register your car now, you can use the drop-down menu below to choose your car's make/model/year/color.</label>
+	</div>	
+	
+	<p>
+	<label>Please choose the car Make first, then choose the car Model, then choose the car Year and Color.</label></br></br>
+	<label><strong>Make: </strong><select id=Make> </select></label>
+	<label><strong>Model: </strong><select id=Model> </select></label>
+	<label><strong>Year: </strong><select id=Year> </select></label>
+	<label><strong>Color: </strong><select id=Color>
+		<option value = "Blank">  </option>
+		<option value = "White"> White </option>
+		<option value = "Black"> Black </option>
+		<option value = "Silver"> Silver </option>
+		<option value = "Gray"> Gray </option>
+		<option value = "Red"> Red </option>
+		<option value = "Blue"> Blue </option>
+		<option value = "Brown"> Brown </option>
+		<option value = "Beige"> Beige </option>
+		<option value = "Yellow/Gold"> Yellow/Gold </option>
+		<option value = "Green"> Green </option>
+		<option value = "Orange"> Orange </option>
+		<option value = "Purple"> Purple </option>
+	</select></label>
+	</p>
+	
+	<div>
+		<label>Note: If you choose not to register your car now, you can just register it later through the profile page. </label>
+	</div>	
+	
+	<p>
+		<input type = "submit" value = "Register" style="width:125px; height:25px;" id="Submit" />
+	</p>
+	
+</form>	
 </body>
 </html>
