@@ -1,0 +1,88 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset=utf-8>
+	<title>Troy Parking Registration</title>
+</head>
+<body>
+	<!-- the form action attribute needs to be changed -->
+	<form method = "post" action = "connectivity.php" autocomplete = "on">  
+	
+	<script>
+	
+			function ConfirmPass()
+			{
+				var Pass = document.getElementById('Pass');
+				var Cpass = document.getElementById('Cpass');
+				var checkmark = document.getElementById('checkmark');
+				var redx = document.getElementById('redx');
+				var submit = document.getElementById('Submit');
+				
+				if(Pass.value == Cpass.value)
+				{
+					checkmark.style.display = "";
+					redx.style.display = "none";
+					submit.disabled = false;
+				}
+				else
+				{
+					redx.style.display = "";
+					checkmark.style.display = "none";
+					submit.disabled = true;
+				}
+			}
+			
+			
+			function Start()
+			{
+				document.getElementById('Pass').addEventListener("change", ConfirmPass);
+				document.getElementById('Cpass').addEventListener("change", ConfirmPass);				
+			}
+			
+		window.addEventListener( "load", Start, false );
+	</script>
+	
+	
+	<h2> Troy Parking Registration Page </h2></br>
+	
+	<p>
+		<label><strong>First Name: </strong><input type ="text" size = "25" maxlength = "30" required placeholder="First Name" pattern = "[a-zA-Z]+" id=Fname></label>
+	</P>
+	
+	<p>
+		<label><strong>Last Name: </strong><input type ="text" size = "25" maxlength = "30" required placeholder="Last Name" pattern = "[a-zA-Z]+" id=Lname></label>
+	</P>
+	
+	<p>
+		<label><strong>Password: </strong><input type ="password" size = "25" maxlength = "30" required placeholder="Password" id=Pass></label>
+	</P>
+
+	<p>
+		<label><strong>Confirm Password: </strong><input type ="password" size = "25" maxlength = "30" required placeholder="Confirm Password" id=Cpass></label>
+		<img src = "images/checkmark.jpg" style='display:none;' id=checkmark />
+		<img src = "images/redx.jpg" style='display:none;' id=redx />
+	</P>		
+	
+	<p>
+		<label><strong>Email: </strong><input type ="email" size = "25" maxlength = "30" placeholder="name@troy.edu" required id=Email pattern="[a-z0-9._%+-]+@troy.edu"></label>
+		<label id="emaillbl">Ex. name123@troy.edu </label>
+	</p>
+
+	<p>
+		<strong>Parking Type:</strong>
+		
+		<label>Student-Commuter<input name = "radioBtn" type = "radio" value = "Commuter-Student" checked ></label>
+		<label>Faculty<input name = "radioBtn" type = "radio" value = "Faculty"></label>
+	</p>
+
+
+	
+	
+	<p>
+		<input type = "submit" value = "Register" style="width:125px; height:25px;" id="Submit" />
+	</p>
+	
+</form>	
+</body>
+</html>
