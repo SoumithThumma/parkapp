@@ -9,6 +9,13 @@ body, html {
 	padding-top: 30px;
     background-repeat: no-repeat;
 	background-color: rgb(29, 82, 136);
+	overflow: hidden;
+}
+
+.primary {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	background-color: white;
 }
 
 .card-container.card {
@@ -145,6 +152,7 @@ body, html {
 ul {
 	font-size: 14px;
 	color: white;
+	list-style-image: url('../images/symbol-check-icon.png');
 }
 
 li {
@@ -155,3 +163,20 @@ li {
 li#last-item {
 	font-weight: bold;
 }
+
+/*
+	Profile page mobile version styling
+*/
+
+.table-text {
+	text-align: center;
+	color: black;
+	padding-left: 20px;
+}
+
+/*
+	Table styling
+*/
+.table th, .table td { 
+     border-top: none !important; 
+ }
