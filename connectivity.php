@@ -11,12 +11,13 @@ function SignIn()
 {
 
 session_start();   //starting the session for user profile page
-if(!empty($_POST['forms'])) 
+if(!empty($_POST['inputEmail'])) 
 {
-	$query = mysql_query("SELECT *  FROM User where Username = '$_POST[forms]' AND Password = '$_POST[Password1]'");
+	$query = mysql_query("SELECT *  FROM User where Email = '$_POST[inputEmail]' AND Password = '$_POST[inputPassword]'
+		AND Active = 'true' ");
 	$row = mysql_fetch_array($query);
 
-	if(!empty($row['Username']) AND !empty($row['Password']))
+	if(!empty($row['Email']) AND !empty($row['Password']))
 	{
 
 		$_SESSION['Username'] = $row['Password'];
@@ -25,11 +26,10 @@ if(!empty($_POST['forms']))
 	}
 	else
 	{
-		echo "Wrong id or password";
+		echo "Login Failed! Please make sure that you enter the correct details and that you have activated your account.";
 	}
 }
 }
-
 	SignIn();
 
 
