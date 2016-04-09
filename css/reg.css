@@ -252,12 +252,20 @@ h2 {
         }
 
     .card.hovercard .bottom .desc {
+        padding: 0px;
         text-align: left;
         overflow: hidden;
         font-size: 15px;
         line-height: 16px;
         color: #737373;
         text-overflow: ellipsis;
+    }
+
+    .card.hovercard .bottom .form-group.group-label {
+        border: 5px solid red;
+        width: 200px;
+        text-align: left;
+        color: red;
     }
 
     .card.hovercard .bottom {
@@ -499,4 +507,21 @@ input[type=radio]:checked ~ .check {
 
 input[type=radio]:checked ~ label {
     color: rgb(29, 82, 136);
+}
+
+
+/*
+    Below contain CSS for car registration page.
+*/
+
+.card.hovercard .cardheader-car {
+        background: url("../images/image1.jpeg");
+        background-size: cover;
+        height: 135px;
+    }
+
+.label-text {
+    font-size: 16px;
+    font-weight: normal;
+    color: #262626;
 }
