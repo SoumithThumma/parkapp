@@ -525,3 +525,17 @@ input[type=radio]:checked ~ label {
     font-weight: normal;
     color: #262626;
 }
+
+/*
+    CSS for thank you
+*/
+
+.card.hovercard .bottom .desc.thank-you {
+        padding: 0px;
+        text-align: center;
+        overflow: hidden;
+        font-size: 20px;
+        line-height: 21px;
+        color: #737373;
+        text-overflow: ellipsis;
+    }
