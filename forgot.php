@@ -8,22 +8,25 @@
 
    if(isset($_GET['email']) && !empty($_GET['email']) AND isset($_GET['hash']) && !empty($_GET['hash'])){
     // Verify data
+    setcookie("Email", $_GET['email'], time() + 3600);
     $email = mysql_escape_string($_GET['email']); // Set email variable
     $hash = mysql_escape_string($_GET['hash']); // Set hash variable
                  
-    $search = mysql_query("SELECT Email, hash, Active FROM User WHERE Email='".$email."' AND hash='".$hash."' AND Active='false'") or die(mysql_error()); 
-    $match  = mysql_num_rows($search);
-                 
+    $search = mysql_query("SELECT Email, hash FROM User WHERE Email='".$email."' AND hash='".$hash."'") or die(mysql_error()); 
+$match  = mysql_num_rows($search);
+$hashone = md5( rand(0,1000) );
+$sql = mysql_query("UPDATE User SET hash='".$hashone."'"." WHERE Email='".$email."'") or die(mysql_error());
+                   
     if($match > 0){
-        // We have a match, activate the account
-        mysql_query("UPDATE User SET Active='true' WHERE Email='".$email."' AND hash='".$hash."' AND Active='false'") or die(mysql_error());
-        
-header('Location: login.php');
+header('Location: forgot.html');
                 
     }else{
-        echo "Invalid Link";
-                
+                echo "Invalid Link";
     }
                  
 }
+
+else{
+                echo "Invalid Link";
+    }
 ?>

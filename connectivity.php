@@ -17,11 +17,20 @@ if(!empty($_POST['inputEmail']))
 		AND Active = 'true' ");
 	$row = mysql_fetch_array($query);
 
+
 	if(!empty($row['Email']) AND !empty($row['Password']))
 	{
 
-		$_SESSION['Username'] = $row['Password'];
-		echo "Login Complete";
+                setcookie("Email", $row['Email'], time() + 3600);
+$cars = (int) $row['Num_of_Cars'];
+if ($cars > 0){header('Location: home.php');
+exit;
+}
+else{header('Location: excarreg.php');
+exit;}
+                
+                
+		//echo "Login Complete";
 
 	}
 	else
@@ -30,6 +39,7 @@ if(!empty($_POST['inputEmail']))
 	}
 }
 }
+
 	SignIn();
 
 
